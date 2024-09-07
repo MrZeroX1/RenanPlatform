@@ -10,17 +10,28 @@ from TTS.tts.models.xtts import Xtts
 import logging
 import time
 import re
+import warnings
+
+warnings.filterwarnings(action='ignore', category=FutureWarning)
+warnings.filterwarnings(action='ignore', category=UserWarning)
 
 # Setup logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-# Define paths for your model, output directory, and background music directory
-config_path = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/new_model/config.json"
-checkpoint_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/new_model/"
-speaker_file_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/GPT_XTTS_FT-August-03/speakers"
-output_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/outputdir"
-bg_music_dir ="/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/music"
+# Fatimah's directories
+# config_path = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/new_model/config.json"
+# checkpoint_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/new_model/"
+# speaker_file_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/GPT_XTTS_FT-August-03/speakers"
+# output_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/outputdir"
+# bg_music_dir ="/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/music"
+
+# Hasan's directories
+config_path = "C:/tt/Web/Renan_Platform/new_model/config.json"
+checkpoint_dir = "C:/tt/Web/Renan_Platform/new_model"
+speaker_file_dir = "C:/tt/Web/Renan_Platform/Speakers"
+output_dir = "C:/tt/Web/Renan_Platform/Output"
+bg_music_dir ="C:/tt/Web/Renan_Platform/RenanPlatform/static/audio/music"
 
 def load_model(config_path, checkpoint_dir):
     """Load the TTS model with given configuration and checkpoint."""
@@ -117,7 +128,7 @@ def generate_audio(model, speaker_id, phrases, output_dir, bg_music_filename=Non
     
     bg_music = None
     if bg_music_filename:
-        bg_music_path = os.path.join(bg_music_dir, bg_music_filename)
+        bg_music_path = os.path.join(bg_music_dir, f"{bg_music_filename}.wav")
         if os.path.exists(bg_music_path):
             bg_music, _ = torchaudio.load(bg_music_path, normalize=True)
             if bg_music.shape[0] > 1:

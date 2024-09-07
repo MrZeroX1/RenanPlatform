@@ -9,18 +9,25 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from Renan_run import load_model, generate_audio
 import os
+import warnings
+
+warnings.filterwarnings(action='ignore', category=FutureWarning)
+warnings.filterwarnings(action='ignore', category=UserWarning)
 
 app = Flask(__name__)
 
-# Load the TTS model when the server starts
-config_path = "D:/AI_Bayan_Project/xtts-trainer/main/config.json"
-checkpoint_dir = "D:/AI_Bayan_Project/xtts-trainer/main"
+# Hasan's directories
+config_path = "C:/tt/Web/Renan_Platform/new_model/config.json"
+checkpoint_dir = "C:/tt/Web/Renan_Platform/new_model"
+driver_dir = "C:/tt/Web/Renan_Platform/chromedriver-win64/chromedriver.exe"
+Output = "C:/tt/Web/Renan_Platform/Output"
+
 model = load_model(config_path, checkpoint_dir)
 
 # Configure Selenium WebDriver
 chrome_options = ChromeOptions()
 chrome_options.add_argument('--headless')  # Run in headless mode
-service = ChromeService(executable_path="D:/Renan/chromedriver-win64/chromedriver.exe")
+service = ChromeService(executable_path=driver_dir)
 
 # Route for the main page
 @app.route('/')
@@ -109,11 +116,11 @@ def generate_text():
 def generate_audio_route():
     data = request.json
     text = data.get('text', '')
-    speaker_id = data.get('speaker_id', 'speaker1')
-    speed = data.get('speed', 'normal')
-    bg_music_filename = data.get('bg_music_filename', None)
+    speaker_id = data.get('speaker_id')
+    speed = data.get('speed')
+    bg_music_filename = data.get('bg_music_filename')
     
-    output_dir = "./audioOutput"
+    output_dir = Output
     
     # Generate audio
     generate_audio(model, speaker_id, [text], output_dir, bg_music_filename, speed)
