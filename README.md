@@ -91,7 +91,7 @@ Before you start running the code, you need to do these to make that website run
      <img src="assest/driver.png" height="400"/>
 
     </div>
-4. You need to download the model from the One Drive and place it with the rest of the files
+3. You need to download the model from the One Drive and place it with the rest of the files
 
       <div align="center">
     
