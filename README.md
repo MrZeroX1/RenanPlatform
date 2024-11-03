@@ -78,7 +78,7 @@ Before you start running the code, you need to do these to make that website run
 
     <div align="center">
 
-    ## <img src="assest/speaker_output.png" height="200"/>
+    ## <img src="assest/speaker_output.png"/>
 
     </div>
 
@@ -87,15 +87,15 @@ Before you start running the code, you need to do these to make that website run
    <div align="center">
 
     
-    ## <img src="assest/driver_down.png" height="200"/>
-    ## <img src="assest/driver.png" height="200"/>
+    ## <img src="assest/driver_down.png" height="500"/>
+    ## <img src="assest/driver.png" height="400"/>
 
     </div>
 4. You need to download the model from the One Drive and place it with the rest of the files
 
       <div align="center">
     
-    ## <img src="assest/model.png" height="200"/>
+    ## <img src="assest/model.png" height="300"/>
 
     </div>
 The README File Under Construction... 🚧 
