@@ -71,4 +71,31 @@ cd RenanPlatform
     ```bash
     pip install -r requirements.txt
     ```
+## During the implementation
+Before you start running the code, you need to do these to make that website run perfectly
+
+1. Create `Speaker` and `Output` folders outside the project folder
+
+    <div align="center">
+
+    ## <img src="assest/speaker_output.png" height="200"/>
+
+    </div>
+
+2. You need to download [chromedriver](https://googlechromelabs.github.io/chrome-for-testing/#stable) **NOT chrome, chromedriver** by just copy and past the URL in the web browser and unzip it
+
+   <div align="center">
+
+    
+    ## <img src="assest/driver_down.png" height="200"/>
+    ## <img src="assest/driver.png" height="200"/>
+
+    </div>
+4. You need to download the model from the One Drive and place it with the rest of the files
+
+      <div align="center">
+    
+    ## <img src="assest/model.png" height="200"/>
+
+    </div>
 The README File Under Construction... 🚧 
