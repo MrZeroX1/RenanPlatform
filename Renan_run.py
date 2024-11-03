@@ -11,6 +11,7 @@ import logging
 import time
 import re
 import warnings
+import Paths as p
 
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 warnings.filterwarnings(action='ignore', category=UserWarning)
@@ -19,19 +20,12 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-# Fatimah's directories
-# config_path = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/new_model/config.json"
-# checkpoint_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/new_model/"
-# speaker_file_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/GPT_XTTS_FT-August-03/speakers"
-# output_dir = "/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/outputdir"
-# bg_music_dir ="/Users/fatimah/Desktop/TTS_mil/xtts-trainer-no-ui-auto/music"
-
-# Hasan's directories
-config_path = "C:/tt/Web/Renan_Platform/new_model/config.json"
-checkpoint_dir = "C:/tt/Web/Renan_Platform/new_model"
-speaker_file_dir = "C:/tt/Web/Renan_Platform/Speakers"
-output_dir = "C:/tt/Web/Renan_Platform/Output"
-bg_music_dir ="C:/tt/Web/Renan_Platform/RenanPlatform/static/audio/music"
+# Directories
+config_path = p.hasan_config
+checkpoint_dir = p.hasan_checkpoint
+speaker_file_dir = p.hasan_speaker_file
+output_dir = p.hasan_output
+bg_music_dir = p.hasan_bg
 
 def load_model(config_path, checkpoint_dir):
     """Load the TTS model with given configuration and checkpoint."""
@@ -43,7 +37,7 @@ def load_model(config_path, checkpoint_dir):
     model = Xtts.init_from_config(config)
     model.load_checkpoint(config, checkpoint_dir=checkpoint_dir, use_deepspeed=False)
     # Ensure model is on CPU
-    model.to(torch.device('cpu'))
+    model.to(torch.device('cuda'))
     return model
 
 # Load model when the script is first executed

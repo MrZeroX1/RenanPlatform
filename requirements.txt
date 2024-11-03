@@ -11,3 +11,4 @@ trainer==0.0.36
 TTS==0.22.0
 flask==2.3.2
 selenium==4.11.2
+beautifulsoup4==4.12.3

@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from Renan_run import load_model, generate_audio
 import os
 import warnings
+import Paths as p
 
 warnings.filterwarnings(action='ignore', category=FutureWarning)
 warnings.filterwarnings(action='ignore', category=UserWarning)
@@ -17,10 +18,10 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 app = Flask(__name__)
 
 # Hasan's directories
-config_path = "C:/tt/Web/Renan_Platform/new_model/config.json"
-checkpoint_dir = "C:/tt/Web/Renan_Platform/new_model"
-driver_dir = "C:/tt/Web/Renan_Platform/chromedriver-win64/chromedriver.exe"
-Output = "C:/tt/Web/Renan_Platform/Output"
+config_path = p.hasan_config
+checkpoint_dir = p.hasan_checkpoint
+driver_dir = p.hasan_driver
+Output = p.hasan_output
 
 model = load_model(config_path, checkpoint_dir)
 
