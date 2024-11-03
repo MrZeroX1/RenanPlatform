@@ -78,7 +78,7 @@ Before you start running the code, you need to do these to make that website run
 
     <div align="center">
 
-    ## <img src="assest/speaker_output.png"/>
+    ## <img src="assest/speaker_output.png" height="400"/>
 
     </div>
 
@@ -87,7 +87,7 @@ Before you start running the code, you need to do these to make that website run
    <div align="center">
 
     
-    ## <img src="assest/driver_down.png" height="500"/>
+    ## <img src="assest/driver_down.png" height="400"/>
     ## <img src="assest/driver.png" height="400"/>
 
     </div>
@@ -95,7 +95,7 @@ Before you start running the code, you need to do these to make that website run
 
       <div align="center">
     
-    ## <img src="assest/model.png" height="300"/>
+    ## <img src="assest/model.png" height="400"/>
 
     </div>
 The README File Under Construction... 🚧 
