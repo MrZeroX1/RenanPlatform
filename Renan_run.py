@@ -21,11 +21,11 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Directories
-config_path = p.hasan_config
-checkpoint_dir = p.hasan_checkpoint
-speaker_file_dir = p.hasan_speaker_file
-output_dir = p.hasan_output
-bg_music_dir = p.hasan_bg
+config_path = p.sarah_config
+checkpoint_dir = p.sarah_checkpoint
+speaker_file_dir = p.sarah_speaker_file
+output_dir = p.sarah_output
+bg_music_dir = p.sarah_bg
 
 def load_model(config_path, checkpoint_dir):
     """Load the TTS model with given configuration and checkpoint."""
@@ -185,12 +185,3 @@ def generate_audio(model, speaker_id, phrases, output_dir, bg_music_filename=Non
         
         torchaudio.save(output_path, final_audio, 24000)
         print(f"Generated audio saved to: {output_path}")
-
-
-
-if __name__ == '__main__':
-    text = "!كِلنا عِنْدِنا صُندوقْ أفْكار، فِكرة جَتْنَا فِي، السيارة اوالطَيَّارة، و المَدرسة اوالعَمَل، لَمَّا ضَحَك لِنا الحَظ، أو خَاننا التَّعْبِير. اليوم بِنِتحَدث عَن كيف مُمكِن نعبِّر عَن أفكارنا، ونَسْتَعرِض مَعكُم أشهر الشركات في هذا المجال "
-    speaker_id = "speaker2"
-    bg_music_filename ="music1.wav"
-    speed = 'normal'
-    generate_audio(model, speaker_id, [text], output_dir, bg_music_filename, speed)

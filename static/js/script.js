@@ -150,3 +150,56 @@ document.addEventListener("DOMContentLoaded", function () {
     playIcon.classList.add("play-icon");
   });
 });
+
+// Upload pop-up
+const speakerSelect = document.getElementById("speaker-select");
+const uploadForm = document.getElementById("upload-form");
+const overlay = document.getElementById("overlay");
+const popup = document.getElementById("popup");
+const fileInput = document.getElementById("voice-file");
+const uploadButton = uploadForm.querySelector("button[type='button']");
+const cancelButton = uploadForm.querySelector("button[type='button']:last-child");
+
+function showPopup() {
+  overlay.style.display = "block";
+  popup.style.display = "block";
+}
+
+function closePopup() {
+  overlay.style.display = "none";
+  popup.style.display = "none";
+  fileInput.value = "";
+}
+
+speakerSelect.addEventListener("change", function () {
+  if (speakerSelect.value === "new") {
+    showPopup();
+  }
+});
+
+uploadButton.addEventListener("click", function () {
+  const file = fileInput.files[0];
+
+  if (file && file.type === "audio/wav") {
+    const formData = new FormData();
+    formData.append("file", file, "new.wav");
+
+    fetch("/upload-voice", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+        closePopup();
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
+        alert("File upload failed. Please try again.");
+      });
+  } else {
+    alert("Please select a valid .wav file.");
+  }
+});
+
+cancelButton.addEventListener("click", closePopup);

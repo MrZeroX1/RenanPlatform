@@ -18,10 +18,10 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 app = Flask(__name__)
 
 # Hasan's directories
-config_path = p.hasan_config
-checkpoint_dir = p.hasan_checkpoint
-driver_dir = p.hasan_driver
-Output = p.hasan_output
+config_path = p.sarah_config
+checkpoint_dir = p.sarah_checkpoint
+driver_dir = p.sarah_driver
+Output = p.sarah_output
 
 model = load_model(config_path, checkpoint_dir)
 
@@ -112,6 +112,7 @@ def generate_text():
     # Return the sanitized text as JSON
     return jsonify({'generated_text': output_text})
 
+
 # API endpoint for generating audio using the pre-trained model
 @app.route('/generate-audio', methods=['POST'])
 def generate_audio_route():
@@ -132,6 +133,17 @@ def generate_audio_route():
     output_path = os.path.join(output_dir, latest_file)
     
     return send_file(output_path, as_attachment=True, download_name="generated_audio.wav")
+
+@app.route('/upload-voice', methods=['POST'])
+def upload_voice():
+    file = request.files.get('file')
+    
+    if file and file.filename.endswith('.wav'):
+        file_path = os.path.join(p.sarah_speaker, "new.wav")
+        file.save(file_path)
+        return jsonify({"message": "تم تحميل الملف بنجاح."}), 200
+    else:
+        return jsonify({"message": "يرجى تحميل ملف بصيغة wav فقط."}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

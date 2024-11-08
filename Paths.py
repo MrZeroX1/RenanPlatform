@@ -23,12 +23,12 @@ sultan__bg =""
 sultan_driver = ""
 
 # Sarah's directories
-sarah_config = ""
-sarah_checkpoint= ""
-sarah_speaker_file= ""
-sarah_output = ""
-sarah_bg =""
-sarah_driver = ""
+sarah_config = "C:/Renan/Model/config.json"
+sarah_checkpoint= "C:/Renan/Model"
+sarah_speaker_file= "C:/Renan/Speaker"
+sarah_output = "C:/Renan/Output"
+sarah_bg = "C:/Renan/RenanPlatform/static/audio/music"
+sarah_driver = "C:/Renan/chromedriver-win64/chromedriver.exe"
 
 # Abdullah's directories
 abdullah_config = ""

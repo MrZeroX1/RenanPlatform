@@ -64,8 +64,12 @@
             <div class="select-container">
                 <select id="speaker-select" class="btn-with-icon">
                     <option disabled selected hidden>المتحدث</option>
-                    <option id="speaker1" value="speaker1">نورة</option>
-                    <option id="speaker2" value="speaker2">محمد</option>
+                    <option id="Sarah" value="Sarah">ساره</option>
+                    <option id="Shahad" value="Shahad">شهد</option>
+                    <option id="Abdullah" value="Abdullah">عبد الله</option>
+                    <option id="Abdulaziz" value="Abdulaziz">عبد العزيز</option>
+                    <!-- <option id="new" value="new">انشئ المتحدث الخاص بك</option> -->
+                    
                 </select>
                 <img src="../static/images/icons/speaker.png" class="drop-icon"><br>
             </div>
@@ -89,7 +93,18 @@
             </div>
         </div>
     </div>
-
+    
+<div id="overlay"></div>
+  <div id="popup">
+    <h3>إرشادات لتحسين النتائج</h3>
+    <p>يرجى تحميل ملف بصيغة .wav يحتوي على صوت واضح وخالٍ من التشويش. الملف سيُستخدم لإنشاء صوتك المخصص.</p>
+    <form id="upload-form">
+      <input type="file" id="voice-file" accept=".wav" required>
+      <p style="color: red;">* الملف بصيغة wav فقط</p>
+      <button type="button" onclick="uploadFile()">إرسال</button>
+      <button type="button" onclick="closePopup()">إلغاء</button>
+    </form>
+  </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
