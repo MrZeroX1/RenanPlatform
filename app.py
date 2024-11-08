@@ -50,6 +50,16 @@ def services():
 def model_page():
     return render_template('model.html')
 
+# Route for the "speech-only-gen" page
+@app.route('/speech-only-gen')
+def speech_only_gen_page():
+    return render_template('speech-only-gen.html')
+
+# Route for the "text-speech-gen" page
+@app.route('/text-speech-gen')
+def text_speech_gen_page():
+    return render_template('text-speech-gen.html')
+
 # Route for the "Contact" page
 @app.route('/contact')
 def contact():

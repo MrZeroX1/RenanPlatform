@@ -23,16 +23,53 @@
     <div id="ttsmodel" class="content-tts-model active">
         <!-- TTS Model content here -->
         <div class="tts-inputs-div">
-            <img src="../static/images/icons/generate_text.png" alt="انشئ محتوى" class="tts-icons">
-            <span class="tts-titles"> انشئ محتوى </span> <br>
-            <textarea id="text-gen-input" class="input-textarea no-scroll" style="height: 80px;"
-                placeholder="اكتب فكرتك هنا ليتم انشاء نص إبداعي لها.."></textarea> <br>
-
             <img src="../static/images/icons/text_to_speech.png" alt="محتوى مسموع" class="tts-icons">
-            <span class="tts-titles"> محتوى مسموع </span> <br>
+            <span class="tts-titles"> أدخل النص الخاص بك لإنشاء تعليقك الصوتي</span> <br>
             <textarea id="tts-input" class="input-textarea no-scroll"
-                placeholder="اكتب نصك الإبداعي هنا ليتم تحويله إلى صوت نابض بالحياة، سيتم عرض النص المقترح لفكرتك هنا.."></textarea>
+                placeholder="اكتب نصك الإبداعي هنا ليتم تحويله إلى صوت نابض بالحياة.."></textarea>
             <br><br>
+
+            <div class="tts-buttons-div">
+                <button id="create-voice-over" class="btn-with-icon">
+                    <img src="../static/images/icons/voice_over.png" alt="عرّف عن مشروعك" class="btn-icon">
+                    عـرّف عـن مـشـروع رِنـان
+                </button>
+                <button id="create-boadcast" class="btn-with-icon">
+                    <img src="../static/images/icons/broadcast.png" alt="قدّم بودكاست" class="btn-icon">
+                    قدّم بودكاست
+                </button>
+                <br><br>
+                <div class="select-container">
+                    <select id="speaker-select" class="btn-with-icon">
+                        <option disabled selected hidden>المتحدث</option>
+                        <option id="Sarah" value="Sarah">ساره</option>
+                        <option id="Shahad" value="Shahad">شهد</option>
+                        <option id="Abdullah" value="Abdullah">عبد الله</option>
+                        <option id="Abdulaziz" value="Abdulaziz">عبد العزيز</option>
+                        <!-- <option id="new" value="new">انشئ المتحدث الخاص بك</option> -->
+                        
+                    </select>
+                    <img src="../static/images/icons/speaker.png" class="drop-icon"><br>
+                </div>
+                <div class="select-container">
+                    <select id="speed-select" class="btn-with-icon">
+                        <option disabled selected hidden>السرعة</option>
+                        <option id="slow" value="0.75">بطيئة</option>
+                        <option id="regular" value="1.00">معتدلة</option>
+                        <option id="fast" value="1.25">سريعة</option>
+                    </select>
+                    <img src="../static/images/icons/speed.png" class="drop-icon"><br>
+                </div>
+                <div class="select-container">
+                    <select id="music-select" class="btn-with-icon">
+                        <option disabled selected hidden>الموسيقى</option>
+                        <option id="no-music" value="None">بدون موسيقى</option>
+                        <option id="music1" value="music1">موسيقى قصصية</option>
+                        <option id="music2" value="music2">موسيقى إعلانية</option>
+                    </select>
+                    <img src="../static/images/icons/music.png" class="drop-icon">
+                </div>
+            </div>
 
             <div class="results">
                 <button id="create" class="create-btn">
@@ -51,50 +88,9 @@
                 </button>
             </div>
         </div>
-        <div class="tts-buttons-div">
-            <button id="create-voice-over" class="btn-with-icon">
-                <img src="../static/images/icons/voice_over.png" alt="عرّف عن مشروعك" class="btn-icon">
-                عـرّف عـن مـشـروع رِنـان
-            </button>
-            <button id="create-boadcast" class="btn-with-icon">
-                <img src="../static/images/icons/broadcast.png" alt="قدّم بودكاست" class="btn-icon">
-                قدّم بودكاست
-            </button>
-            <br><br>
-            <div class="select-container">
-                <select id="speaker-select" class="btn-with-icon">
-                    <option disabled selected hidden>المتحدث</option>
-                    <option id="Sarah" value="Sarah">ساره</option>
-                    <option id="Shahad" value="Shahad">شهد</option>
-                    <option id="Abdullah" value="Abdullah">عبد الله</option>
-                    <option id="Abdulaziz" value="Abdulaziz">عبد العزيز</option>
-                    <!-- <option id="new" value="new">انشئ المتحدث الخاص بك</option> -->
-                    
-                </select>
-                <img src="../static/images/icons/speaker.png" class="drop-icon"><br>
-            </div>
-            <div class="select-container">
-                <select id="speed-select" class="btn-with-icon">
-                    <option disabled selected hidden>السرعة</option>
-                    <option id="slow" value="0.75">بطيئة</option>
-                    <option id="regular" value="1.00">معتدلة</option>
-                    <option id="fast" value="1.25">سريعة</option>
-                </select>
-                <img src="../static/images/icons/speed.png" class="drop-icon"><br>
-            </div>
-            <div class="select-container">
-                <select id="music-select" class="btn-with-icon">
-                    <option disabled selected hidden>الموسيقى</option>
-                    <option id="no-music" value="None">بدون موسيقى</option>
-                    <option id="music1" value="music1">موسيقى قصصية</option>
-                    <option id="music2" value="music2">موسيقى إعلانية</option>
-                </select>
-                <img src="../static/images/icons/music.png" class="drop-icon">
-            </div>
-        </div>
     </div>
     
-<div id="overlay"></div>
+<!-- <div id="overlay"></div>
   <div id="popup">
     <h3>إرشادات لتحسين النتائج</h3>
     <p>يرجى تحميل ملف بصيغة .wav يحتوي على صوت واضح وخالٍ من التشويش. الملف سيُستخدم لإنشاء صوتك المخصص.</p>
@@ -115,7 +111,7 @@
                     document.body.insertAdjacentHTML('beforeend', data);
                 });
         });
-    </script>
+    </script> -->
 </body>
 
 
