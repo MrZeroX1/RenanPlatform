@@ -21,16 +21,16 @@
 <body>
     <div id="header-placeholder"></div>
     <div id="main" class="content active">
-        <div class="main-content">
+        <div class="main-content-model">
             <div class="main-text">
                 <span>
                     اختر ما يناسبك لإنشاء تعليقك الصوتي
                 </span>
                 <div class="buttons-container">
                     <button onclick="location.href='{{ url_for('speech_only_gen_page') }}'"
-                        class="main-button secondary-button">لدي نصي الخاص</button>
+                        class="main-button primary-button">لدي نصي الخاص</button>
                     <button onclick="location.href='{{ url_for('text_speech_gen_page') }}'"
-                        class="main-button primary-button">ليس لدي نص وأود إنشاء نص جديد</button>
+                        class="main-model-button">إنشاء نص جديد</button>
                 </div>
 
             </div>
