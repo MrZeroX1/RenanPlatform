@@ -8,13 +8,12 @@
 
 ## Team Members
 - [Sultan AlBayyat - سلطان البيات](https://www.linkedin.com/in/sultan-albayyat/)
-- [Fatimah Aljishi - فاطمة الجشي](https://www.linkedin.com/in/fatimah-aljishi-103927291/)
 - [Hasan Alzayer - حسن الزاير](https://www.linkedin.com/in/hasan-alzayer/)
 - [Abdullah Al-Tamh - عبدالله الطعمة](https://www.linkedin.com/in/abdullah-al-tamh-643851281/)
 - [Sarah Alshaikhmohammed - ساره آل شيخ محمد](https://www.linkedin.com/in/sarah-alshaikhmohammed-ab20a9252/)
 
 
-## Prequests
+## Prerquests
 
 - `3.9.x <= Python < 3.12`
 - `CUDA >= 11.8`
@@ -82,16 +81,7 @@ Before you start running the code, you need to do these to make that website run
 
     </div>
 
-2. You need to download [chromedriver](https://googlechromelabs.github.io/chrome-for-testing/#stable) **NOT chrome, chromedriver** by just copy and past the URL in the web browser and unzip it
-
-   <div align="center">
-
-    
-     <img src="assest/driver_down.png" height="400"/>
-     <img src="assest/driver.png" height="400"/>
-
-    </div>
-3. You need to download the model from the One Drive and place it with the rest of the files
+2. You need to download the model from the One Drive and place it with the rest of the files
 
       <div align="center">
     
@@ -99,16 +89,9 @@ Before you start running the code, you need to do these to make that website run
 
     </div>
 
-any finally include all the paths in `paths.py` under your name, and change the paths on both `app.py` and `Renan_run.py`
+finally include all the paths in `paths.py` under your name, and change the paths on both `app.py` and `Renan_run.py`
 
 ### Running the Script
 ```bash
 python app.py
 ```
-
-## Error handling
-
-Since I can't remember any error it will stay like this until someone face an error
-
-So.....
-The README File Under Construction... 🚧 
