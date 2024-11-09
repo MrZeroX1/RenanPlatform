@@ -8,7 +8,6 @@
 
 ## Team Members
 - [Sultan AlBayyat - سلطان البيات](https://www.linkedin.com/in/sultan-albayyat/)
-- [Fatimah Aljishi - فاطمة الجشي](https://www.linkedin.com/in/fatimah-aljishi-103927291/)
 - [Hasan Alzayer - حسن الزاير](https://www.linkedin.com/in/hasan-alzayer/)
 - [Abdullah Al-Tamh - عبدالله الطعمة](https://www.linkedin.com/in/abdullah-al-tamh-643851281/)
 - [Sarah Alshaikhmohammed - ساره آل شيخ محمد](https://www.linkedin.com/in/sarah-alshaikhmohammed-ab20a9252/)
