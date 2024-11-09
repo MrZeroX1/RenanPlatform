@@ -12,30 +12,30 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 app = Flask(__name__)
 
 # Hasan's directories
-config_path = p.sultan_config
-checkpoint_dir = p.sultan_checkpoint
-driver_dir = p.sultan_driver
-Output = p.sultan_output
+config_path = p.hasan_config
+checkpoint_dir = p.hasan_checkpoint
+driver_dir = p.hasan_driver
+Output = p.hasan_output
 
 model = load_model(config_path, checkpoint_dir)
 
-# Set up IBM Watson Model
+# IBM Watson Model configuration
 def get_credentials():
     return {
         "url": "https://eu-de.ml.cloud.ibm.com",
-        "apikey": "N8X3zjj2i-jl0WFwLnjW9iERaI75O4XG8uFSaN_bt44M"
+        "apikey": "B50IFqeVP1KrX1rBCnaDQqdVpEDd_ZkxxLFdPKioWZuD"
     }
 
 model_id = "sdaia/allam-1-13b-instruct"
 project_id = "dfecab4f-ecf4-44ab-999d-1e5a330df2fb"
 parameters = {
     "decoding_method": "greedy",
-    "max_new_tokens": 500,
+    "max_new_tokens": 4096,
     "stop_sequences": ["\n"],
     "repetition_penalty": 1
 }
 
-model = Model(
+watson_model = Model(
     model_id=model_id,
     params=parameters,
     credentials=get_credentials(),
@@ -93,16 +93,22 @@ def generate_text():
     data = request.json
     user_input = data.get('input')
 
-    # Generate the response using IBM Watson model
     try:
-        generated_response = model.generate_text(prompt=user_input)
-        output_text = generated_response.get('generated_text', '')
-
-        # Return the generated text as JSON
+        # Use IBM Watson model to generate text
+        generated_response = watson_model.generate_text(prompt=user_input)
+        
+        # Extract the generated text from response
+        if isinstance(generated_response, dict) and 'generated_text' in generated_response:
+            output_text = generated_response['generated_text']
+        else:
+            # Handle unexpected response structure
+            output_text = generated_response if isinstance(generated_response, str) else ""
+        
+        print("Output Text:", output_text)
         return jsonify({'generated_text': output_text})
     except Exception as e:
+        print("Error in generating text:", e)  # Log the exception for debugging
         return jsonify({'error': str(e)}), 500
-
 
 # API endpoint for generating audio using the pre-trained model
 @app.route('/generate-audio', methods=['POST'])

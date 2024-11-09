@@ -21,11 +21,11 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Directories
-config_path = p.sarah_config
-checkpoint_dir = p.sarah_checkpoint
-speaker_file_dir = p.sarah_speaker_file
-output_dir = p.sarah_output
-bg_music_dir = p.sarah_bg
+config_path = p.hasan_config
+checkpoint_dir = p.hasan_checkpoint
+speaker_file_dir = p.hasan_speaker_file
+output_dir = p.hasan_output
+bg_music_dir = p.hasan_bg
 
 def load_model(config_path, checkpoint_dir):
     """Load the TTS model with given configuration and checkpoint."""
@@ -37,7 +37,7 @@ def load_model(config_path, checkpoint_dir):
     model = Xtts.init_from_config(config)
     model.load_checkpoint(config, checkpoint_dir=checkpoint_dir, use_deepspeed=False)
     # Ensure model is on CPU
-    model.to(torch.device('cuda'))
+    model.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
     return model
 
 # Load model when the script is first executed

@@ -63,38 +63,48 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // If the user is generating new text
     if (textInput) {
       try {
-        createButton.innerHTML = "يتم إنتاج النص...";
-        createButton.disabled = true;
-        const response = await fetch("/generate-text", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ input: textInput }),
-        });
+          createButton.innerHTML = "يتم إنتاج النص...";
+          createButton.disabled = true;
 
-        const data = await response.json();
-        const generatedText = data.generated_text;
+          const response = await fetch("/generate-text", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ input: textInput }),
+          });
 
-        ttsInputTextArea.value = "";
-        let i = 0;
-        const speed = 10; // Typing speed
-        function typeWriter() {
-          if (i < generatedText.length) {
-            ttsInputTextArea.value += generatedText.charAt(i);
-            i++;
-            setTimeout(typeWriter, speed);
+          const data = await response.json();
+          console.log("Text Generation Response:", data); // Log the response to check if it's received
+
+          const generatedText = data.generated_text;
+
+          // Check if generatedText is populated
+          if (generatedText) {
+              ttsInputTextArea.value = ""; // Clear previous text
+
+              // Display generated text in `tts-input` with typing effect
+              let i = 0;
+              const speed = 10; // Typing speed
+              function typeWriter() {
+                  if (i < generatedText.length) {
+                      ttsInputTextArea.value += generatedText.charAt(i);
+                      i++;
+                      setTimeout(typeWriter, speed);
+                  }
+              }
+              typeWriter();
+          } else {
+              alert("No text was generated.");
           }
-        }
-        typeWriter();
-        resetCreateButton();
-        resetTextGen();
+
+          resetCreateButton();
+          resetTextGen();
       } catch (error) {
-        console.error("Error:", error);
-        resetCreateButton();
+          console.error("Error:", error);
+          resetCreateButton();
       }
-    }
+  }
     // If the user is converting text to speech
     else if (ttsInput) {
       createButton.innerText = "يتم تحويل النص إلى صوت...";
@@ -119,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         const blob = await response.blob();
+        console.log("Text Generation Response:", data); // Add this line
         const audioURL = URL.createObjectURL(blob);
         audioElement.src = audioURL;
         audioElement.play();

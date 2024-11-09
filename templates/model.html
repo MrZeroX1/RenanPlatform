@@ -1,120 +1,384 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}رِنـــان - TTS Model{% endblock %}</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/logo/renan_logo.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/logo/renan_logo.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch("{{ url_for('header') }}")
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-placeholder').innerHTML = data;
-                });
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("{{ url_for('header') }}")
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("header-placeholder").innerHTML = data;
+          });
+      });
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="header-placeholder"></div>
     <div id="ttsmodel" class="content-tts-model active">
-        <!-- TTS Model content here -->
-        <div class="tts-inputs-div">
-            <img src="../static/images/icons/generate_text.png" alt="انشئ محتوى" class="tts-icons">
-            <span class="tts-titles"> انشئ محتوى </span> <br>
-            <textarea id="text-gen-input" class="input-textarea no-scroll" style="height: 80px;"
-                placeholder="اكتب فكرتك هنا ليتم انشاء نص إبداعي لها.."></textarea> <br>
+      <!-- TTS Model content here -->
+      <div class="tts-inputs-div">
+        <img
+          src="../static/images/icons/generate_text.png"
+          alt="انشئ محتوى"
+          class="tts-icons"
+        />
+        <span class="tts-titles"> انشئ محتوى </span> <br />
+        <textarea
+          id="text-gen-input"
+          class="input-textarea no-scroll"
+          style="height: 80px"
+          placeholder="اكتب فكرتك هنا ليتم انشاء نص إبداعي لها.."
+        ></textarea>
+        <br />
 
-            <img src="../static/images/icons/text_to_speech.png" alt="محتوى مسموع" class="tts-icons">
-            <span class="tts-titles"> أدخل النص الخاص بك لإنشاء تعليقك الصوتي</span> <br>
-            <textarea id="tts-input" class="input-textarea no-scroll"
-                placeholder="اكتب نصك الإبداعي هنا ليتم تحويله إلى صوت نابض بالحياة، سيتم عرض النص المقترح لفكرتك هنا.."></textarea>
-            <br><br>
+        <img
+          src="../static/images/icons/text_to_speech.png"
+          alt="محتوى مسموع"
+          class="tts-icons"
+        />
+        <span class="tts-titles"> أدخل النص الخاص بك لإنشاء تعليقك الصوتي</span>
+        <br />
+        <textarea
+          id="tts-input"
+          class="input-textarea no-scroll"
+          placeholder="اكتب نصك الإبداعي هنا ليتم تحويله إلى صوت نابض بالحياة، سيتم عرض النص المقترح لفكرتك هنا.."
+        ></textarea>
+        <br /><br />
 
-            <div class="results">
-                <button id="create" class="create-btn">
-                    <img src="../static/images/icons/create.png" alt="انشاء" class="btn-icon">
-                    انـشــاء
-                </button>
-                <!-- Here I try to match the Audio like what in the UI of Our Website -->
-                <div class="custom-audio-player">
-                    <audio class="audio-res" id="audio-result"></audio>
-                    <button class="play-button" id="playButton">
-                        <div class="play-icon"></div>
-                    </button>
-                </div>
-                <button class="download-btn">
-                    <img id="download-link" src="../static/images/icons/download.png" download="audio.wav" hidden>
-                </button>
-            </div>
-        </div>
-        <div class="tts-buttons-div">
-            <button id="create-voice-over" class="btn-with-icon">
-                <img src="../static/images/icons/voice_over.png" alt="عرّف عن مشروعك" class="btn-icon">
-                عـرّف عـن مـشـروع رِنـان
+        <div class="results">
+          <button id="create" class="create-btn">
+            <img
+              src="../static/images/icons/create.png"
+              alt="انشاء"
+              class="btn-icon"
+            />
+            انـشــاء
+          </button>
+          <!-- Here I try to match the Audio like what in the UI of Our Website -->
+          <div class="custom-audio-player">
+            <audio class="audio-res" id="audio-result"></audio>
+            <button class="play-button" id="playButton">
+              <div class="play-icon"></div>
             </button>
-            <button id="create-boadcast" class="btn-with-icon">
-                <img src="../static/images/icons/broadcast.png" alt="قدّم بودكاست" class="btn-icon">
-                قدّم بودكاست
-            </button>
-            <br><br>
-            <div class="select-container">
-                <select id="speaker-select" class="btn-with-icon">
-                    <option disabled selected hidden>المتحدث</option>
-                    <option id="Sarah" value="Sarah">ساره</option>
-                    <option id="Abdullah" value="Abdullah">عبد الله</option>
-                    <!-- <option id="new" value="new">انشئ المتحدث الخاص بك</option> -->
-                    
-                </select>
-                <img src="../static/images/icons/speaker.png" class="drop-icon"><br>
-            </div>
-            <div class="select-container">
-                <select id="speed-select" class="btn-with-icon">
-                    <option disabled selected hidden>السرعة</option>
-                    <option id="slow" value="0.75">بطيئة</option>
-                    <option id="regular" value="1.00">معتدلة</option>
-                    <option id="fast" value="1.25">سريعة</option>
-                </select>
-                <img src="../static/images/icons/speed.png" class="drop-icon"><br>
-            </div>
-            <div class="select-container">
-                <select id="music-select" class="btn-with-icon">
-                    <option disabled selected hidden>الموسيقى</option>
-                    <option id="no-music" value="None">بدون موسيقى</option>
-                    <option id="music1" value="music1">موسيقى قصصية</option>
-                    <option id="music2" value="music2">موسيقى إعلانية</option>
-                </select>
-                <img src="../static/images/icons/music.png" class="drop-icon">
-            </div>
+          </div>
+          <button class="download-btn">
+            <img
+              id="download-link"
+              src="../static/images/icons/download.png"
+              download="audio.wav"
+              hidden
+            />
+          </button>
         </div>
+      </div>
+      <div class="tts-buttons-div">
+        <button id="create-voice-over" class="btn-with-icon">
+          <img
+            src="../static/images/icons/voice_over.png"
+            alt="عرّف عن مشروعك"
+            class="btn-icon"
+          />
+          عـرّف عـن مـشـروع رِنـان
+        </button>
+        <button id="create-boadcast" class="btn-with-icon">
+          <img
+            src="../static/images/icons/broadcast.png"
+            alt="قدّم بودكاست"
+            class="btn-icon"
+          />
+          قدّم بودكاست
+        </button>
+        <br /><br />
+        <div class="select-container">
+          <select id="speaker-select" class="btn-with-icon">
+            <option disabled selected hidden>المتحدث</option>
+            <option id="Sarah" value="Sarah">ساره</option>
+            <option id="Abdullah" value="Abdullah">عبد الله</option>
+            <!-- <option id="new" value="new">انشئ المتحدث الخاص بك</option> -->
+          </select>
+          <img
+            src="../static/images/icons/speaker.png"
+            class="drop-icon"
+          /><br />
+        </div>
+        <div class="select-container">
+          <select id="speed-select" class="btn-with-icon">
+            <option disabled selected hidden>السرعة</option>
+            <option id="slow" value="0.75">بطيئة</option>
+            <option id="regular" value="1.00">معتدلة</option>
+            <option id="fast" value="1.25">سريعة</option>
+          </select>
+          <img src="../static/images/icons/speed.png" class="drop-icon" /><br />
+        </div>
+        <div class="select-container">
+          <select id="music-select" class="btn-with-icon">
+            <option disabled selected hidden>الموسيقى</option>
+            <option id="no-music" value="None">بدون موسيقى</option>
+            <option id="music1" value="music1">موسيقى قصصية</option>
+            <option id="music2" value="music2">موسيقى إعلانية</option>
+          </select>
+          <img src="../static/images/icons/music.png" class="drop-icon" />
+        </div>
+      </div>
     </div>
-    
-<div id="overlay"></div>
-  <div id="popup">
-    <h3>إرشادات لتحسين النتائج</h3>
-    <p>يرجى تحميل ملف بصيغة .wav يحتوي على صوت واضح وخالٍ من التشويش. الملف سيُستخدم لإنشاء صوتك المخصص.</p>
-    <form id="upload-form">
-      <input type="file" id="voice-file" accept=".wav" required>
-      <p style="color: red;">* الملف بصيغة wav فقط</p>
-      <button type="button" onclick="uploadFile()">إرسال</button>
-      <button type="button" onclick="closePopup()">إلغاء</button>
-    </form>
-  </div>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <div id="overlay"></div>
+    <div id="popup">
+      <h3>إرشادات لتحسين النتائج</h3>
+      <p>
+        يرجى تحميل ملف بصيغة .wav يحتوي على صوت واضح وخالٍ من التشويش. الملف
+        سيُستخدم لإنشاء صوتك المخصص.
+      </p>
+      <form id="upload-form">
+        <input type="file" id="voice-file" accept=".wav" required />
+        <p style="color: red">* الملف بصيغة wav فقط</p>
+        <button type="button" onclick="uploadFile()">إرسال</button>
+        <button type="button" onclick="closePopup()">إلغاء</button>
+      </form>
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            fetch("{{ url_for('footer') }}")
-                .then(response => response.text())
-                .then(data => {
-                    document.body.insertAdjacentHTML('beforeend', data);
-                });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get references to the elements
+        const createVoiceOverButton =
+          document.getElementById("create-voice-over");
+        const createBroadcastButton =
+          document.getElementById("create-boadcast");
+        const audioElement = document.getElementById("audio-result");
+        const ttsInputTextArea = document.getElementById("tts-input");
+        const textGenInput = document.getElementById("text-gen-input");
+        const createButton = document.getElementById("create");
+        const playButton = document.getElementById("playButton");
+        const playIcon = playButton.querySelector(".play-icon");
+
+        function resetCreateButton() {
+          createButton.innerHTML = `
+      <img src="../static/images/icons/create.png" alt="انشاء" class="btn-icon">
+      انـشــاء
+    `;
+          createButton.disabled = false;
+        }
+
+        function resetTextGen() {
+          textGenInput.innerHTML = `<textarea id="text-gen-input" class="input-textarea no-scroll" style="height: 80px;"
+              placeholder="اكتب فكرتك هنا ليتم انشاء نص إبداعي لها.."></textarea> <br>`;
+        }
+
+        // Function to handle the pre-defined button logic
+        function handlePredefinedText(buttonType) {
+          const predefinedData = {
+            "create-voice-over": {
+              audioPath: "../audio/samples/RenanSample.wav",
+              text: "خَل صُوتِك يَبرِز مَع رِنان سَواء كِنت تِحتَاج تَعليق صَوتِي احترافي،أو تبغَى تحَسّن إنتاجِك، رِسَالتِك مَعْنَا تُسْمَع! هذا هو رِنان.",
+            },
+            "create-boadcast": {
+              audioPath: "../audio/samples/bodcastSample.wav",
+              text: "كِلنا عِنْدِنا صُندوقْ أفْكار، فِكرة جَتْنَا فِي، السيارة اوالطَيَّارة، و المَدرسة اوالعَمَل، لَمَّا ضَحَك لِنا الحَظ، أو خَاننا التَّعْبِير. اليوم بِنِتحَدث عَن كيف مُمكِن نعبِّر عَن أفكارنا، ونَسْتَعرِض مَعكُم أشهر الشركات في هذا المجال!",
+            },
+          };
+
+          const selectedData = predefinedData[buttonType];
+          if (selectedData) {
+            audioElement.src = selectedData.audioPath;
+            audioElement.hidden = false;
+            ttsInputTextArea.value = selectedData.text;
+          }
+        }
+
+        // Event listeners for pre-defined buttons
+        createVoiceOverButton.addEventListener("click", function () {
+          handlePredefinedText("create-voice-over");
         });
+
+        createBroadcastButton.addEventListener("click", function () {
+          handlePredefinedText("create-boadcast");
+        });
+
+        // Event listener for the "Create" button to generate audio
+        createButton.addEventListener("click", async function () {
+          const textInput = textGenInput.value;
+          const ttsInput = ttsInputTextArea.value;
+
+          // Ensure only one text area is filled
+          if (textInput && ttsInput) {
+            alert("الرجاء أملئ فقط واحدة من الخانات فقط");
+            return;
+          }
+
+          if (textInput) {
+            try {
+              createButton.innerHTML = "يتم إنتاج النص...";
+              createButton.disabled = true;
+
+              const response = await fetch("/generate-text", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ input: textInput }),
+              });
+
+              const data = await response.json();
+              console.log("Text Generation Response:", data); // Log the response to check if it's received
+
+              const generatedText = data.generated_text;
+
+              // Check if generatedText is populated
+              if (generatedText) {
+                ttsInputTextArea.value = ""; // Clear previous text
+
+                // Display generated text in `tts-input` with typing effect
+                let i = 0;
+                const speed = 10; // Typing speed
+                function typeWriter() {
+                  if (i < generatedText.length) {
+                    ttsInputTextArea.value += generatedText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                  }
+                }
+                typeWriter();
+              } else {
+                alert("No text was generated.");
+              }
+
+              resetCreateButton();
+              resetTextGen();
+            } catch (error) {
+              console.error("Error:", error);
+              resetCreateButton();
+            }
+          }
+          // If the user is converting text to speech
+          else if (ttsInput) {
+            createButton.innerText = "يتم تحويل النص إلى صوت...";
+            createButton.disabled = true;
+            const text = ttsInput;
+            const speakerId =
+              document.getElementById("speaker-select").value || "speaker1"; // Default speaker
+            const speed =
+              document.getElementById("speed-select").value || "1.00"; // Default speed
+            const bgMusicFilename =
+              document.getElementById("music-select").value || "no-music"; // Default to no music
+
+            try {
+              const response = await fetch("/generate-audio", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  text: text,
+                  speaker_id: speakerId,
+                  speed: speed,
+                  bg_music_filename: bgMusicFilename,
+                }),
+              });
+
+              const blob = await response.blob();
+              console.log("Text Generation Response:", data); // Add this line
+              const audioURL = URL.createObjectURL(blob);
+              audioElement.src = audioURL;
+              audioElement.play();
+
+              resetCreateButton();
+            } catch (error) {
+              console.error("Error:", error);
+              resetCreateButton();
+            }
+          }
+        });
+
+        // Toggle play and pause functionality for the playButton
+        playButton.addEventListener("click", function () {
+          if (audioElement.paused) {
+            audioElement.play();
+            playIcon.classList.remove("play-icon");
+            playIcon.classList.add("pause-icon");
+          } else {
+            audioElement.pause();
+            playIcon.classList.remove("pause-icon");
+            playIcon.classList.add("play-icon");
+          }
+        });
+
+        // Automatically reset to the play icon when the audio ends
+        audioElement.addEventListener("ended", function () {
+          playIcon.classList.remove("pause-icon");
+          playIcon.classList.add("play-icon");
+        });
+      });
+
+      // Upload pop-up
+      const speakerSelect = document.getElementById("speaker-select");
+      const uploadForm = document.getElementById("upload-form");
+      const overlay = document.getElementById("overlay");
+      const popup = document.getElementById("popup");
+      const fileInput = document.getElementById("voice-file");
+      const uploadButton = uploadForm.querySelector("button[type='button']");
+      const cancelButton = uploadForm.querySelector(
+        "button[type='button']:last-child"
+      );
+
+      function showPopup() {
+        overlay.style.display = "block";
+        popup.style.display = "block";
+      }
+
+      function closePopup() {
+        overlay.style.display = "none";
+        popup.style.display = "none";
+        fileInput.value = "";
+      }
+
+      speakerSelect.addEventListener("change", function () {
+        if (speakerSelect.value === "new") {
+          showPopup();
+        }
+      });
+
+      uploadButton.addEventListener("click", function () {
+        const file = fileInput.files[0];
+
+        if (file && file.type === "audio/wav") {
+          const formData = new FormData();
+          formData.append("file", file, "new.wav");
+
+          fetch("/upload-voice", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              alert(data.message);
+              closePopup();
+            })
+            .catch((error) => {
+              console.error("Error uploading file:", error);
+              alert("File upload failed. Please try again.");
+            });
+        } else {
+          alert("Please select a valid .wav file.");
+        }
+      });
+
+      cancelButton.addEventListener("click", closePopup);
     </script>
-</body>
-
-
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("{{ url_for('footer') }}")
+          .then((response) => response.text())
+          .then((data) => {
+            document.body.insertAdjacentHTML("beforeend", data);
+          });
+      });
+    </script>
+  </body>
 </html>
