@@ -104,10 +104,3 @@ any finally include all the paths in `paths.py` under your name, and change the 
 ```bash
 python app.py
 ```
-
-## Error handling
-
-Since I can't remember any error it will stay like this until someone face an error
-
-So.....
-The README File Under Construction... 🚧 
