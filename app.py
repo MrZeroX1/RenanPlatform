@@ -1,12 +1,6 @@
 from flask import Flask, render_template, request, jsonify, send_file
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from bs4 import BeautifulSoup
+from ibm_watsonx_ai.foundation_models import Model
+import json
 from Renan_run import load_model, generate_audio
 import os
 import warnings
@@ -18,17 +12,35 @@ warnings.filterwarnings(action='ignore', category=UserWarning)
 app = Flask(__name__)
 
 # Hasan's directories
-config_path = p.sarah_config
-checkpoint_dir = p.sarah_checkpoint
-driver_dir = p.sarah_driver
-Output = p.sarah_output
+config_path = p.sultan_config
+checkpoint_dir = p.sultan_checkpoint
+driver_dir = p.sultan_driver
+Output = p.sultan_output
 
 model = load_model(config_path, checkpoint_dir)
 
-# Configure Selenium WebDriver
-chrome_options = ChromeOptions()
-chrome_options.add_argument('--headless')  # Run in headless mode
-service = ChromeService(executable_path=driver_dir)
+# Set up IBM Watson Model
+def get_credentials():
+    return {
+        "url": "https://eu-de.ml.cloud.ibm.com",
+        "apikey": "N8X3zjj2i-jl0WFwLnjW9iERaI75O4XG8uFSaN_bt44M"
+    }
+
+model_id = "sdaia/allam-1-13b-instruct"
+project_id = "dfecab4f-ecf4-44ab-999d-1e5a330df2fb"
+parameters = {
+    "decoding_method": "greedy",
+    "max_new_tokens": 500,
+    "stop_sequences": ["\n"],
+    "repetition_penalty": 1
+}
+
+model = Model(
+    model_id=model_id,
+    params=parameters,
+    credentials=get_credentials(),
+    project_id=project_id
+)
 
 # Route for the main page
 @app.route('/')
@@ -75,52 +87,21 @@ def header():
 def footer():
     return render_template('footer.html')
 
-# API endpoint for generating text using Selenium
+# API endpoint for generating text
 @app.route('/generate-text', methods=['POST'])
 def generate_text():
     data = request.json
     user_input = data.get('input')
 
-    # Set up Selenium options for headless browsing
-    options = Options()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome(options=options)
-
+    # Generate the response using IBM Watson model
     try:
-        # Navigate to the target website
-        driver.get('https://toolbaz.com/writer/ai-story-generator')
+        generated_response = model.generate_text(prompt=user_input)
+        output_text = generated_response.get('generated_text', '')
 
-        # Find the input field and enter the user text
-        input_field = driver.find_element(By.ID, 'input')
-        input_field.send_keys(user_input)
-
-        # Wait until the generate button is clickable and then click it
-        generate_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'main_btn'))
-        )
-
-        # Scroll into view and click the button
-        driver.execute_script("arguments[0].scrollIntoView(true);", generate_button)
-        driver.execute_script("arguments[0].click();", generate_button)
-
-        # Wait for the output to appear
-        WebDriverWait(driver, 15).until(
-            EC.visibility_of_element_located((By.ID, 'output'))
-        )
-
-        # Get the output text
-        output_div = driver.find_element(By.ID, 'output')
-        output_html = output_div.get_attribute('innerHTML')
-
-        # Use BeautifulSoup to parse the HTML and extract the text
-        soup = BeautifulSoup(output_html, 'html.parser')
-        output_text = ''.join(p.get_text() for p in soup.find_all('p'))
-
-    finally:
-        driver.quit()
-
-    # Return the sanitized text as JSON
-    return jsonify({'generated_text': output_text})
+        # Return the generated text as JSON
+        return jsonify({'generated_text': output_text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # API endpoint for generating audio using the pre-trained model
@@ -149,7 +130,7 @@ def upload_voice():
     file = request.files.get('file')
     
     if file and file.filename.endswith('.wav'):
-        file_path = os.path.join(p.sarah_speaker, "new.wav")
+        file_path = os.path.join(p.sulatn_speaker, "new.wav")
         file.save(file_path)
         return jsonify({"message": "تم تحميل الملف بنجاح."}), 200
     else:
